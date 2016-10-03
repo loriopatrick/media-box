@@ -29,10 +29,7 @@ class App extends Component {
     this.history = [];
   }
   onSongDone(src) {
-    console.log('song is done', src);
-    this.setState({
-      song_src: 'http://files.walnut/Music/Sim%20Gretina%20-%20Gallon%20To%20Liter%20Converter-oD5Zu4wCBUQ.mp3'
-    });
+    this.onPlayerNext();
   }
   onPlayerNext() {
     if (this.state.song_src) {
@@ -42,7 +39,7 @@ class App extends Component {
     var song;
     do {
       song = this.state.files[Math.floor(Math.random() * this.state.files.length)];
-    } while (history.length > 0 && history[history.length - 1] === song); 
+    } while (this.history.length > 0 && this.history[history.length - 1] === song);
 
     this.setState({
       song_src: song
