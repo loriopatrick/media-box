@@ -119,10 +119,10 @@ class Player extends Component {
 
 function format2Number(num) {
   var str = num + '';
-  if (str.length == 1) {
+  if (str.length === 1) {
     return '0' + str;
   }
-  if (str.length == 0) {
+  if (str.length === 0) {
     return '00';
   }
   return str;

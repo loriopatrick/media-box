@@ -3,7 +3,7 @@ var request = require('superagent');
 
 function load_files(root, cb) {
   if (!root.endsWith('/')) {
-    root = root + '/';
+    root += '/';
   }
   request.get(root).end((err, res) => {
     if (err) {
