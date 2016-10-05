@@ -28,23 +28,23 @@ class Player extends Component {
       }
     }
   }
-	togglePlay() {
-	  this.setState({ is_playing: !this.state.is_playing });
-	}
-	startSetProgress(evt) {
-	  this.setState({
+  togglePlay() {
+    this.setState({ is_playing: !this.state.is_playing });
+  }
+  startSetProgress(evt) {
+    this.setState({
       in_set_progress_mode: true
     });
     this.setProgress(evt);
   }
-	stopSetProgress(evt) {
-	  this.setState({
+  stopSetProgress(evt) {
+    this.setState({
       in_set_progress_mode: false
     });
     this.setProgress(evt);
   }
-	setProgress(evt) {
-	  if (this.state.in_set_progress_mode) {
+  setProgress(evt) {
+    if (this.state.in_set_progress_mode) {
       var progress = (evt.clientX - offsetLeft(this.refs.progress_bar)) / this.refs.progress_bar.clientWidth;
       this.setState({
         progress: progress
@@ -110,10 +110,10 @@ class Player extends Component {
         <div className="time">
         {formatTime(currentTime)} / {formatTime(totalTime)}
         </div>
-				<audio ref="player" autoPlay={this.state.is_playing}>
-					<source src={this.props.src} />
-					<source/>
-				</audio>
+        <audio ref="player" autoPlay={this.state.is_playing}>
+            <source src={this.props.src} />
+            <source/>
+        </audio>
       </div>
     );
   }
