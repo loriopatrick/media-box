@@ -15,15 +15,14 @@ class Player extends Component {
     this.interval_id = setInterval(this.onUpdate.bind(this), 250);
   }
   onUpdate() {
-    var player = this.refs.player;
-    if (player) {
+    if (this._player) {
       if (!this.is_progress_dirty) {
         this.setState({
-          progress: player.currentTime / player.duration
+          progress: this._player.currentTime / this._player.duration
         });
       }
 
-      if (player.ended && this.props.onDone) {
+      if (this._player.ended && this.props.onDone) {
         this.props.onDone(this.props.src);
       }
     }
@@ -45,7 +44,7 @@ class Player extends Component {
   }
   setProgress(evt) {
     if (this.state.in_set_progress_mode) {
-      var progress = (evt.clientX - offsetLeft(this.refs.progress_bar)) / this.refs.progress_bar.clientWidth;
+      var progress = (evt.clientX - offsetLeft(this._progress_bar)) / this._progress_bar.clientWidth;
       this.setState({
         progress: progress
       });
@@ -56,29 +55,28 @@ class Player extends Component {
     var currentTime = 0;
     var totalTime = 0;
 
-    if (this.refs.player) {
-      var player = this.refs.player;
-      if (player.currentSrc !== this.props.src) {
-        player.src = this.props.src;
+    if (this._player) {
+      if (this._player.currentSrc !== this.props.src) {
+        this._player.src = this.props.src;
       }
 
-      if (player.paused && !player.ended) {
+      if (this._player.paused && !this._player.ended) {
         if (this.state.is_playing) {
-          player.play();
+          this._player.play();
         }
       }
       else if (!this.state.is_playing) {
-        player.pause();
+        this._player.pause();
       }
 
       if (this.is_progress_dirty) {
         this.is_progress_dirty = false;
 
-        player.currentTime = player.duration * this.state.progress;
+        this._player.currentTime = this._player.duration * this.state.progress;
       }
 
-      currentTime = player.currentTime;
-      totalTime = player.duration;
+      currentTime = this._player.currentTime;
+      totalTime = this._player.duration;
     }
 
     var playerClsName = {
@@ -103,14 +101,14 @@ class Player extends Component {
           onMouseUp={this.stopSetProgress.bind(this)}
           className="progress"
         >
-          <div ref="progress_bar" className="bar">
+          <div ref={(ref) => this._progress_bar = ref} className="bar">
             <div style={{ width: (this.state.progress * 100) + '%' }}></div>
           </div>
         </div>
         <div className="time">
         {formatTime(currentTime)} / {formatTime(totalTime)}
         </div>
-        <audio ref="player" autoPlay={this.state.is_playing}>
+        <audio ref={(ref) => this._player = ref} autoPlay={this.state.is_playing}>
             <source src={this.props.src} />
             <source/>
         </audio>
